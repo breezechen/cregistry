@@ -5,6 +5,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Registry", "Registry.vcproj
 EndProject
 Global
 	GlobalSection(SolutionConfiguration) = preSolution
+		[R][D] DLL = [R][D] DLL
 		[R][D] Static Library = [R][D] Static Library
 		[R][S] DLL = [R][S] DLL
 		[R][S] Static Library = [R][S] Static Library
@@ -13,6 +14,8 @@ Global
 	GlobalSection(ProjectDependencies) = postSolution
 	EndGlobalSection
 	GlobalSection(ProjectConfiguration) = postSolution
+		{EA16A3A3-D5E0-4666-A254-39A11F720FAC}.[R][D] DLL.ActiveCfg = [R][D] DLL|Win32
+		{EA16A3A3-D5E0-4666-A254-39A11F720FAC}.[R][D] DLL.Build.0 = [R][D] DLL|Win32
 		{EA16A3A3-D5E0-4666-A254-39A11F720FAC}.[R][D] Static Library.ActiveCfg = [R][D] Static Library|Win32
 		{EA16A3A3-D5E0-4666-A254-39A11F720FAC}.[R][D] Static Library.Build.0 = [R][D] Static Library|Win32
 		{EA16A3A3-D5E0-4666-A254-39A11F720FAC}.[R][S] DLL.ActiveCfg = [R][S] DLL|Win32
