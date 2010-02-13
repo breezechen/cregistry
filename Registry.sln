@@ -5,22 +5,22 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Registry", "Registry.vcproj
 EndProject
 Global
 	GlobalSection(SolutionConfiguration) = preSolution
+		[R][D] Static Library = [R][D] Static Library
+		[R][S] DLL = [R][S] DLL
 		[R][S] Static Library = [R][S] Static Library
 		Debug = Debug
-		Release = Release
-		Static Release = Static Release
 	EndGlobalSection
 	GlobalSection(ProjectDependencies) = postSolution
 	EndGlobalSection
 	GlobalSection(ProjectConfiguration) = postSolution
+		{EA16A3A3-D5E0-4666-A254-39A11F720FAC}.[R][D] Static Library.ActiveCfg = [R][D] Static Library|Win32
+		{EA16A3A3-D5E0-4666-A254-39A11F720FAC}.[R][D] Static Library.Build.0 = [R][D] Static Library|Win32
+		{EA16A3A3-D5E0-4666-A254-39A11F720FAC}.[R][S] DLL.ActiveCfg = [R][S] DLL|Win32
+		{EA16A3A3-D5E0-4666-A254-39A11F720FAC}.[R][S] DLL.Build.0 = [R][S] DLL|Win32
 		{EA16A3A3-D5E0-4666-A254-39A11F720FAC}.[R][S] Static Library.ActiveCfg = [R][S] Static Library|Win32
 		{EA16A3A3-D5E0-4666-A254-39A11F720FAC}.[R][S] Static Library.Build.0 = [R][S] Static Library|Win32
 		{EA16A3A3-D5E0-4666-A254-39A11F720FAC}.Debug.ActiveCfg = Debug|Win32
 		{EA16A3A3-D5E0-4666-A254-39A11F720FAC}.Debug.Build.0 = Debug|Win32
-		{EA16A3A3-D5E0-4666-A254-39A11F720FAC}.Release.ActiveCfg = Release|Win32
-		{EA16A3A3-D5E0-4666-A254-39A11F720FAC}.Release.Build.0 = Release|Win32
-		{EA16A3A3-D5E0-4666-A254-39A11F720FAC}.Static Release.ActiveCfg = Static Release|Win32
-		{EA16A3A3-D5E0-4666-A254-39A11F720FAC}.Static Release.Build.0 = Static Release|Win32
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 	EndGlobalSection

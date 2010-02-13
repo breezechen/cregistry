@@ -61,8 +61,8 @@
 				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
 		</Configuration>
 		<Configuration
-			Name="Release|Win32"
-			OutputDirectory="bin"
+			Name="[R][S] DLL|Win32"
+			OutputDirectory="bin\$(PlatformName)\$(ConfigurationName)"
 			IntermediateDirectory="Intermediate\$(PlatformName)\$(ConfigurationName)"
 			ConfigurationType="2"
 			CharacterSet="1"
@@ -75,11 +75,11 @@
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="TRUE"
 				EnableFiberSafeOptimizations="TRUE"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;REGISTRY_EXPORTS;_WIN32_WINNT=0x0502;_WIN32_IE=0x0600;WINVER=0x0502;UTILITIES_STATICLIB;STRICT"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_USRDLL;REGISTRY_EXPORTS;_WIN32_WINNT=0x0502;_WIN32_IE=0x0600;WINVER=0x0502;STRICT"
 				StringPooling="TRUE"
-				RuntimeLibrary="2"
+				RuntimeLibrary="0"
 				BufferSecurityCheck="FALSE"
-				EnableFunctionLevelLinking="FALSE"
+				EnableFunctionLevelLinking="TRUE"
 				ForceConformanceInForLoopScope="TRUE"
 				RuntimeTypeInfo="TRUE"
 				UsePrecompiledHeader="3"
@@ -92,15 +92,14 @@
 				Name="VCCustomBuildTool"/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="Utilities.lib"
 				OutputFile="$(OutDir)/Registry.dll"
 				LinkIncremental="1"
 				SuppressStartupBanner="TRUE"
-				AdditionalLibraryDirectories="lib"
+				AdditionalLibraryDirectories=""
 				GenerateDebugInformation="FALSE"
 				SubSystem="2"
 				OptimizeReferences="2"
-				EnableCOMDATFolding="2"
+				EnableCOMDATFolding="0"
 				OptimizeForWindows98="1"
 				SetChecksum="TRUE"
 				ImportLibrary="$(OutDir)/Registry.lib"
@@ -127,8 +126,8 @@
 				Name="VCAuxiliaryManagedWrapperGeneratorTool"/>
 		</Configuration>
 		<Configuration
-			Name="Static Release|Win32"
-			OutputDirectory="bin"
+			Name="[R][D] Static Library|Win32"
+			OutputDirectory="bin\$(PlatformName)\$(ConfigurationName)"
 			IntermediateDirectory="Intermediate\$(PlatformName)\$(ConfigurationName)"
 			ConfigurationType="4"
 			CharacterSet="1"
@@ -141,7 +140,7 @@
 				FavorSizeOrSpeed="1"
 				OmitFramePointers="TRUE"
 				EnableFiberSafeOptimizations="TRUE"
-				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WIN32_WINNT=0x0502;_WIN32_IE=0x0600;WINVER=0x0502;STRICT;REGISTRY_STATICLIB;UTILITIES_STATICLIB"
+				PreprocessorDefinitions="WIN32;NDEBUG;_WINDOWS;_WIN32_WINNT=0x0502;_WIN32_IE=0x0600;WINVER=0x0502;STRICT;REGISTRY_STATICLIB"
 				StringPooling="TRUE"
 				RuntimeLibrary="2"
 				BufferSecurityCheck="FALSE"
@@ -251,13 +250,13 @@
 						UsePrecompiledHeader="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Release|Win32">
+					Name="[R][S] DLL|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="1"/>
 				</FileConfiguration>
 				<FileConfiguration
-					Name="Static Release|Win32">
+					Name="[R][D] Static Library|Win32">
 					<Tool
 						Name="VCCLCompilerTool"
 						UsePrecompiledHeader="1"/>
@@ -291,7 +290,7 @@
 			<File
 				RelativePath=".\Registry.rc">
 				<FileConfiguration
-					Name="Static Release|Win32"
+					Name="[R][D] Static Library|Win32"
 					ExcludedFromBuild="TRUE">
 					<Tool
 						Name="VCResourceCompilerTool"/>
