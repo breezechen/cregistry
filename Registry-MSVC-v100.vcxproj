@@ -104,6 +104,11 @@
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='[R][S] Static Library|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='[R][S] Static Library|Win32'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='[R][S] Static Library|Win32'" />
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='[D][D] DLL|Win32'">CRegistry32</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='[R][D] DLL|Win32'">CRegistry32</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='[R][D] Static Library|Win32'">CRegistry32</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='[R][S] DLL|Win32'">CRegistry32</TargetName>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='[R][S] Static Library|Win32'">CRegistry32</TargetName>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='[D][D] DLL|Win32'">
     <ClCompile>
