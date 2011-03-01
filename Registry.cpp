@@ -57,7 +57,7 @@ CRegistry::CRegistry(HKEY hRoot, PCWSTR pszSubKey, REGSAM samDesired, bool blCre
 	// Check hRoot
 	if (HKEY_CURRENT_USER == hRoot)
 	{
-		nRet = ::RegOpenCurrentUser(KEY_ALL_ACCESS, &this->m_hUser);
+		nRet = ::RegOpenCurrentUser(KEY_ALL_ACCESS, &m_hUser);
 
 		if (nRet != ERROR_SUCCESS)
 		{
@@ -73,14 +73,14 @@ CRegistry::CRegistry(HKEY hRoot, PCWSTR pszSubKey, REGSAM samDesired, bool blCre
 			throw std::runtime_error(strError);
 		}
 		
-		hRoot = this->m_hUser;
+		hRoot = m_hUser;
 	}
 
 	// Open Key
 	if (blCreateIfNotExist)
-		nRet = ::RegCreateKeyExW(hRoot, pszSubKey, 0, NULL, REG_OPTION_NON_VOLATILE, samDesired, NULL, &this->m_hKey, NULL);
+		nRet = ::RegCreateKeyExW(hRoot, pszSubKey, 0, NULL, REG_OPTION_NON_VOLATILE, samDesired, NULL, &m_hKey, NULL);
 	else
-		nRet = ::RegOpenKeyExW(hRoot, pszSubKey, 0, samDesired, &this->m_hKey);
+		nRet = ::RegOpenKeyExW(hRoot, pszSubKey, 0, samDesired, &m_hKey);
 
 	if (nRet != ERROR_SUCCESS)
 	{
@@ -110,7 +110,7 @@ CRegistry::CRegistry(HKEY hRoot, PCSTR pszSubKey, REGSAM samDesired, bool blCrea
 	// Check hRoot
 	if (HKEY_CURRENT_USER == hRoot)
 	{
-		nRet = ::RegOpenCurrentUser(KEY_ALL_ACCESS, &this->m_hUser);
+		nRet = ::RegOpenCurrentUser(KEY_ALL_ACCESS, &m_hUser);
 
 		if (nRet != ERROR_SUCCESS)
 		{
@@ -126,14 +126,14 @@ CRegistry::CRegistry(HKEY hRoot, PCSTR pszSubKey, REGSAM samDesired, bool blCrea
 			throw std::runtime_error(strError);
 		}
 
-		hRoot = this->m_hUser;
+		hRoot = m_hUser;
 	}
 
 	// Open Key
 	if (blCreateIfNotExist)
-		nRet = ::RegCreateKeyExA(hRoot, pszSubKey, 0, NULL, REG_OPTION_NON_VOLATILE, samDesired, NULL, &this->m_hKey, NULL);
+		nRet = ::RegCreateKeyExA(hRoot, pszSubKey, 0, NULL, REG_OPTION_NON_VOLATILE, samDesired, NULL, &m_hKey, NULL);
 	else
-		nRet = ::RegOpenKeyExA(hRoot, pszSubKey, 0, samDesired, &this->m_hKey);
+		nRet = ::RegOpenKeyExA(hRoot, pszSubKey, 0, samDesired, &m_hKey);
 
 	if (nRet != ERROR_SUCCESS)
 	{
@@ -166,10 +166,10 @@ CRegistry::CRegistry(const CRegistry& that) : m_hKey(NULL), m_hUser(NULL)
 CRegistry::~CRegistry()
 {
 	// Close Key Handle
-	if (this->m_hKey)
-		::RegCloseKey(this->m_hKey);
-	if (this->m_hUser)
-		::RegCloseKey(this->m_hUser);
+	if (m_hKey)
+		::RegCloseKey(m_hKey);
+	if (m_hUser)
+		::RegCloseKey(m_hUser);
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -183,14 +183,14 @@ CRegistry& CRegistry::operator= (const CRegistry& that)
 	hProcess = ::GetCurrentProcess();
 
 	// Reset var
-	::RegCloseKey(this->m_hKey);
-	::RegCloseKey(this->m_hUser);
+	::RegCloseKey(m_hKey);
+	::RegCloseKey(m_hUser);
 
-	this->m_hKey	= NULL;
-	this->m_hUser	= NULL;
+	m_hKey	= NULL;
+	m_hUser	= NULL;
 
 	// Duplicate Registry Handle
-	if (that.m_hKey && !::DuplicateHandle(hProcess, that.m_hKey, hProcess, reinterpret_cast<PHANDLE>(&this->m_hKey), 0, FALSE, DUPLICATE_SAME_ACCESS))
+	if (that.m_hKey && !::DuplicateHandle(hProcess, that.m_hKey, hProcess, reinterpret_cast<PHANDLE>(&m_hKey), 0, FALSE, DUPLICATE_SAME_ACCESS))
 	{
 		std::string strError, strMsg;
 
@@ -204,7 +204,7 @@ CRegistry& CRegistry::operator= (const CRegistry& that)
 		throw std::runtime_error(strError);
 	}
 
-	if (that.m_hUser && !::DuplicateHandle(hProcess, that.m_hUser, hProcess, reinterpret_cast<PHANDLE>(&this->m_hUser), 0, FALSE, DUPLICATE_SAME_ACCESS))
+	if (that.m_hUser && !::DuplicateHandle(hProcess, that.m_hUser, hProcess, reinterpret_cast<PHANDLE>(&m_hUser), 0, FALSE, DUPLICATE_SAME_ACCESS))
 	{
 		std::string strError, strMsg;
 
@@ -227,22 +227,22 @@ CRegistry& CRegistry::operator= (const CRegistry& that)
 
 DWORD CRegistry::WriteBinaryValue(LPCVOID lpValue, DWORD dwLength, PCWSTR pszValueName) const
 {
-	return ::RegSetValueExW(this->m_hKey, pszValueName, 0, REG_BINARY, reinterpret_cast<const BYTE*>(lpValue), dwLength);
+	return ::RegSetValueExW(m_hKey, pszValueName, 0, REG_BINARY, reinterpret_cast<const BYTE*>(lpValue), dwLength);
 }
 
 DWORD CRegistry::WriteBinaryValue(LPCVOID lpValue, DWORD dwLength, PCSTR pszValueName) const
 {
-	return ::RegSetValueExA(this->m_hKey, pszValueName, 0, REG_BINARY, reinterpret_cast<const BYTE*>(lpValue), dwLength);
+	return ::RegSetValueExA(m_hKey, pszValueName, 0, REG_BINARY, reinterpret_cast<const BYTE*>(lpValue), dwLength);
 }
 
 DWORD CRegistry::WriteDoubleWordValue(DWORD dwValue, PCWSTR pszValueName) const
 {
-	return ::RegSetValueExW(this->m_hKey, pszValueName, 0, REG_DWORD, reinterpret_cast<LPBYTE>(&dwValue), sizeof(DWORD));
+	return ::RegSetValueExW(m_hKey, pszValueName, 0, REG_DWORD, reinterpret_cast<LPBYTE>(&dwValue), sizeof(DWORD));
 }
 
 DWORD CRegistry::WriteDoubleWordValue(DWORD dwValue, PCSTR pszValueName) const
 {
-	return ::RegSetValueExA(this->m_hKey, pszValueName, 0, REG_DWORD, reinterpret_cast<LPBYTE>(&dwValue), sizeof(DWORD));
+	return ::RegSetValueExA(m_hKey, pszValueName, 0, REG_DWORD, reinterpret_cast<LPBYTE>(&dwValue), sizeof(DWORD));
 }
 
 DWORD CRegistry::WriteStringValue(PCWSTR pszValue, PCWSTR pszValueName) const
@@ -250,7 +250,7 @@ DWORD CRegistry::WriteStringValue(PCWSTR pszValue, PCWSTR pszValueName) const
 	if (!pszValue)
 		return ERROR_INVALID_PARAMETER;
 
-	return ::RegSetValueExW(this->m_hKey, pszValueName, 0, REG_SZ, reinterpret_cast<const BYTE*>(pszValue), (wcslen(pszValue) + 1) * sizeof(WCHAR));
+	return ::RegSetValueExW(m_hKey, pszValueName, 0, REG_SZ, reinterpret_cast<const BYTE*>(pszValue), (wcslen(pszValue) + 1) * sizeof(WCHAR));
 }
 
 DWORD CRegistry::WriteStringValue(PCSTR pszValue, PCSTR pszValueName) const
@@ -258,7 +258,7 @@ DWORD CRegistry::WriteStringValue(PCSTR pszValue, PCSTR pszValueName) const
 	if (!pszValue)
 		return ERROR_INVALID_PARAMETER;
 
-	return ::RegSetValueExA(this->m_hKey, pszValueName, 0, REG_SZ, reinterpret_cast<const BYTE*>(pszValue), strlen(pszValue) + 1);
+	return ::RegSetValueExA(m_hKey, pszValueName, 0, REG_SZ, reinterpret_cast<const BYTE*>(pszValue), strlen(pszValue) + 1);
 }
 
 //////////////////////////////////////////////////////////////////////
@@ -267,26 +267,26 @@ DWORD CRegistry::WriteStringValue(PCSTR pszValue, PCSTR pszValueName) const
 
 DWORD CRegistry::ReadBinaryValue(LPVOID lpValue, DWORD dwSize, PCWSTR pszValueName, PDWORD pType) const
 {
-	return ::RegQueryValueExW(this->m_hKey, pszValueName, NULL, pType, reinterpret_cast<LPBYTE>(lpValue), &dwSize);
+	return ::RegQueryValueExW(m_hKey, pszValueName, NULL, pType, reinterpret_cast<LPBYTE>(lpValue), &dwSize);
 }
 
 DWORD CRegistry::ReadBinaryValue(LPVOID lpValue, DWORD dwSize, PCSTR pszValueName, PDWORD pType) const
 {
-	return ::RegQueryValueExA(this->m_hKey, pszValueName, NULL, pType, reinterpret_cast<LPBYTE>(lpValue), &dwSize);
+	return ::RegQueryValueExA(m_hKey, pszValueName, NULL, pType, reinterpret_cast<LPBYTE>(lpValue), &dwSize);
 }
 
 DWORD CRegistry::ReadDoubleWordValue(PDWORD pValue, PCWSTR pszValueName, PDWORD pType) const
 {
 	DWORD dwSize = sizeof(DWORD);
 
-	return ::RegQueryValueExW(this->m_hKey, pszValueName, NULL, pType, reinterpret_cast<LPBYTE>(pValue), &dwSize);
+	return ::RegQueryValueExW(m_hKey, pszValueName, NULL, pType, reinterpret_cast<LPBYTE>(pValue), &dwSize);
 }
 
 DWORD CRegistry::ReadDoubleWordValue(PDWORD pValue, PCSTR pszValueName, PDWORD pType) const
 {
 	DWORD dwSize = sizeof(DWORD);
 
-	return ::RegQueryValueExA(this->m_hKey, pszValueName, NULL, pType, reinterpret_cast<LPBYTE>(pValue), &dwSize);
+	return ::RegQueryValueExA(m_hKey, pszValueName, NULL, pType, reinterpret_cast<LPBYTE>(pValue), &dwSize);
 }
 
 DWORD CRegistry::ReadStringValue(std::wstring& strValue, PCWSTR pszValueName, PDWORD pType) const
@@ -296,7 +296,7 @@ DWORD CRegistry::ReadStringValue(std::wstring& strValue, PCWSTR pszValueName, PD
 	HANDLE	hHeap;
 
 	// Determine data size
-	dwRet = ::RegQueryValueExW(this->m_hKey, pszValueName, NULL, pType, NULL, &dwSize);
+	dwRet = ::RegQueryValueExW(m_hKey, pszValueName, NULL, pType, NULL, &dwSize);
 	if (dwRet != ERROR_SUCCESS)
 		return dwRet;
 
@@ -305,7 +305,7 @@ DWORD CRegistry::ReadStringValue(std::wstring& strValue, PCWSTR pszValueName, PD
 	pszValue	= reinterpret_cast<PWSTR>(::HeapAlloc(hHeap, HEAP_GENERATE_EXCEPTIONS | HEAP_ZERO_MEMORY, dwSize + sizeof(WCHAR)));
 
 	// Read value
-	dwRet = ::RegQueryValueExW(this->m_hKey, pszValueName, NULL, pType, reinterpret_cast<LPBYTE>(pszValue), &dwSize);
+	dwRet = ::RegQueryValueExW(m_hKey, pszValueName, NULL, pType, reinterpret_cast<LPBYTE>(pszValue), &dwSize);
 
 	if (ERROR_SUCCESS == dwRet)
 		strValue = pszValue;
@@ -323,7 +323,7 @@ DWORD CRegistry::ReadStringValue(std::string& strValue, PCSTR pszValueName, PDWO
 	HANDLE	hHeap;
 
 	// Determine data size
-	dwRet = ::RegQueryValueExA(this->m_hKey, pszValueName, NULL, pType, NULL, &dwSize);
+	dwRet = ::RegQueryValueExA(m_hKey, pszValueName, NULL, pType, NULL, &dwSize);
 	if (dwRet != ERROR_SUCCESS)
 		return dwRet;
 
@@ -332,7 +332,7 @@ DWORD CRegistry::ReadStringValue(std::string& strValue, PCSTR pszValueName, PDWO
 	pszValue	= reinterpret_cast<PSTR>(::HeapAlloc(hHeap, HEAP_GENERATE_EXCEPTIONS | HEAP_ZERO_MEMORY, dwSize + 1));
 
 	// Read value
-	dwRet = ::RegQueryValueExA(this->m_hKey, pszValueName, NULL, pType, reinterpret_cast<LPBYTE>(pszValue), &dwSize);
+	dwRet = ::RegQueryValueExA(m_hKey, pszValueName, NULL, pType, reinterpret_cast<LPBYTE>(pszValue), &dwSize);
 
 	if (ERROR_SUCCESS == dwRet)
 		strValue = pszValue;
